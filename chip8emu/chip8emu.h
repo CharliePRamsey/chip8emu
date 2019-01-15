@@ -33,7 +33,7 @@ private:
 	unsigned char keys[16];
 public:
 	void initialize();
-	void loadGame(std::string game);
+	void loadGame(const char* game);
 	void emulateCycle();
 	void setKeys();
 	unsigned char drawFlag;

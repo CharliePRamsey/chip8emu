@@ -28,9 +28,25 @@ void chip8emu::initialize()
 	delayTimer = 0;
 }
 
-void chip8emu::loadGame(std::string game)
+void chip8emu::loadGame(const char* game)
 {
+	int memLoc = 0;
+	int buffer = 0;
 	//open game with fopen, binary mode
+	FILE* gameFile;
+	fopen_s(&gameFile, game, "rb");
+	if (gameFile == NULL)
+		perror("Error Opening Game File");
+	else
+	{
+		while (!feof(gameFile))
+		{
+			buffer = fgetc(gameFile);
+			if (buffer >= 0)
+				mem[memLoc] = buffer;
+			memLoc++;
+		}
+	}
 	//load game into memory starting at byte 0x200
 }
 

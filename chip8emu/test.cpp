@@ -4,16 +4,9 @@
 
 int main()
 {
-	unsigned char buff[4];
-	int ent = 0;
-	FILE* myFile;
-	fopen_s(&myFile, "myFile.txt", "rb");
-	std::cout << "TESTING START" << std::endl;
-	while (!feof(myFile))
-	{
-		ent = fread_s(buff, sizeof(buff), 1, 3, myFile);
-		std::cout << ent;
-	}
-	std::cout << "TESTING END" << std::endl;
-	return 0;
+	short opcode = 0x0540;
+	opcode = (opcode >> 8) & 0x0F;
+	std::cout << "hello" << std::endl;
+	std::cout << opcode << std::endl;
+	std::cout << "bye" << std::endl;
 }

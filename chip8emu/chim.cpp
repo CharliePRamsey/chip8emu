@@ -3,7 +3,5 @@
 
 int main()
 {
-	srand(time(NULL));
-	chip8emu ch8;
-	ch8.initialize();
+	return 0;
 }

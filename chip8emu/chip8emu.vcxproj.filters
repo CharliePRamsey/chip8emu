@@ -29,7 +29,7 @@
     <ClCompile Include="chip8emu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="chim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

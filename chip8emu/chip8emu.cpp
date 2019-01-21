@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "chip8emu.h"
+#include <iostream>
 //probably more includes
 
 
@@ -30,6 +31,8 @@ void chip8emu::initialize()
 
 	soundTimer = 0;
 	delayTimer = 0;
+
+	waitForKey = false;
 
 	//Load the fontset into memory.
 	for (int j = 0; j < 80; j++)
@@ -62,6 +65,30 @@ void chip8emu::loadGame(const char* game)
 
 	std::cout << "Game File Read. Number of Bytes: " << gameBytes << std::endl;
 	//load game into memory starting at byte 0x200
+}
+
+void chip8emu::keyEvent(int key, int type)
+{
+	for (int j = 0; j < 16; j++)
+	{
+		if (keymappings[j] == key)
+		{
+			std::cout << j << " was pressed." << std::endl;
+			key = j;
+			break;
+		}
+	}
+	if (type == 1)
+	{
+		keys[key] = 1;
+		if (waitForKey)
+		{
+			V[keySlot] = key;
+			waitForKey = false;
+		}
+	}
+	else if (type == 0)
+		keys[key] = 0;
 }
 
 void chip8emu::emulateCycle()
@@ -267,10 +294,11 @@ void chip8emu::emulateCycle()
 					V[x] = delayTimer;
 					pc += 2;
 					break;
-				//FX0A: Wait for a key press, blocking all operation until a key press event. Store that key in V[X].
+				//FX0A: Wait for a key press, blocking all operation until a key press event. Store that key in V[X]. This is done via a public variable, waitForKey, that disallows calling emulateCycle until a key press event has been detected. X is recorded as keySlot.
 				case 0x000A:
 				{
-					//Perhaps use GLFW here?
+					keySlot = (opcode >> 8) & 0x0F;
+					waitForKey = true;
 				}
 				break;
 				//FX15: Set delayTimer = V[X].

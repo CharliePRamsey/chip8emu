@@ -33,6 +33,8 @@ private:
 	unsigned char delayTimer;
 	unsigned char soundTimer;
 
+	unsigned int keySlot;
+
 	unsigned char keys[16];
 
 	unsigned char ch8_fontset[80] =
@@ -54,10 +56,31 @@ private:
 	  0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
 	  0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 	};
+
+	unsigned char keymappings[16] = 
+	{
+		88, //0 mapped to X
+		49, //1 mapped to 1
+		50, //2 mapped to 2
+		51, //3 mapped to 3
+		81, //4 mapped to Q
+		87, //5 mapped to W
+		69, //6 mapped to E
+		65, //7 mapped to A
+		83, //8 mapped to S
+		68, //9 mapped to D
+		90, //A mapped to Z
+		67, //B mapped to C
+		52, //C mapped to 4
+		82, //D mapped to R
+		70, //E mapped to F
+		86 //F mapped to V
+	};
 public:
 	void initialize();
 	void loadGame(const char* game);
 	void emulateCycle();
-	void setKeys();
+	void keyEvent(int key, int type);
 	bool drawFlag;
+	bool waitForKey;
 };
